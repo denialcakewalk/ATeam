@@ -221,7 +221,7 @@ class VisitorDetails extends React.Component {
 
 
                                                         <div className="form-group">
-                                                            <img src="./css/images/default.jpg" className="form-control" placeholder="Visitor's Name" style={visitorImageHeight}/>
+                                                            <img src="./css/images/default.jpg" className="form-control" style={visitorImageHeight}/>
                                                         </div>
 
 

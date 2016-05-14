@@ -43,9 +43,7 @@ class VisitorDetails extends React.Component {
                                                         <label className="btn btn-default">
                                                             <input type="radio" id="radioFemale" name="quality[25]" value="2" /> Female
                                                         </label>
-                                                        <label className="btn btn-default">
-                                                            <input type="radio" id="radioOther" name="quality[25]" value="3" /> Other
-                                                        </label>
+                                                    
                                                     </div>
                                                 </div>
 

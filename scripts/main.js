@@ -16,7 +16,7 @@ import VisitorDetails from './components/VisitorDetails';
 
 var routes = (
     <Router history={createHistory()}>
-        <Route path="/" component={Dashboard}/>
+        {/* <Route path="/" component={Dashboard}/>*/}
         <Route path="/PersonDetails" component={PersonDetails}/>
         <Route path="/VisitorDetails" component={VisitorDetails}/>
 

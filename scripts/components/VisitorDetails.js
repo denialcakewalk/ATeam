@@ -92,8 +92,8 @@ class VisitorDetails extends React.Component {
 
 
         Webcam.set({
-
-            height: 180,
+            
+            height: 280,
             image_format: 'jpeg',
             jpeg_quality: 90
         });

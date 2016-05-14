@@ -386,4 +386,18 @@ line-height: 1.428571429;
     }
 }
 
+@media(max-width: 370px) {
+    .outPersonName {
+        white-space: nowrap;
+        width: 5em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+    }
+}
+
+.checkOutbottomRow
+{
+    border-bottom: 1px solid grey;
+}
 

@@ -1,7 +1,13 @@
 import React from 'react';
 
 class PersonDetails extends React.Component {
+
+
+
+
     render() {
+
+
 
         var visitorImageHeight ={
             height:180

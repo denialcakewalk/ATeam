@@ -3,12 +3,115 @@
  */
 
 import React from 'react';
+import Idb from 'idb';
+
 
 class VisitorDetails extends React.Component {
+
+    verifyCode(e){
+        e.preventDefault();
+
+        var mobileNo = $("#txtMobile").val();
+        var codeVal = $("#txtCode").val();
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber:mobileNo, oneTimePassword: codeVal });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/verifyOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='Valid Code';
+                $('#lblMessage')[0].style.color='green';
+                $('#lblResend').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+            },
+            error: function (jqXHR, textStatus, ex) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='InValid Code';
+                $('#lblMessage')[0].style.color='red';
+                $('#lblResend').show();
+                // console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+            }
+        });
+    }
+
+    sendOTP(e){
+
+        e.preventDefault();
+        var mobileNo = $("#txtMobile").val();
+
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber: mobileNo });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/generateOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#veryfyOTPdiv').show();
+                $('#txtMobileDiv').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+
+            },
+            error: function (jqXHR, textStatus, ex) {
+                console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+            }
+        });
+    }
+
+    onCapturClick (e){
+        e.preventDefault();
+
+        Webcam.snap(function (data_uri){
+
+        });
+    }
+
+    onCameraClick (e){
+        e.preventDefault();
+
+
+        Webcam.set({
+
+            height: 180,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#imgDiv');
+
+    }
     render() {
 
         var visitorImageHeight ={
             height : 180
+        }
+
+        var hideShow= {
+            display:'none'
+        }
+
+        var hideLblMessageDiv = {
+            display:'none'
         }
 
 
@@ -66,14 +169,33 @@ class VisitorDetails extends React.Component {
                                                     </div>
                                                 </div>
                                                  */}
-                                                <div className="form-group">
+                                                <div id="txtMobileDiv" className="form-group">
                                                     <div className="input-group">
-                                                        <input type="number" className="form-control" placeholder="Mobile Number"/>
+                                                        <input id="txtMobile" type="number" className="form-control" placeholder="Mobile Number"/>
                                                      <span className="form-group input-group-btn">
-                                                        <button className="btn btn-primary" type="button">Verify</button>
+                                                        <button className="btn btn-primary" type="button" onClick={this.sendOTP}>Send OTP</button>
                                                       </span>
                                                     </div>
                                                 </div>
+
+                                                <div id="veryfyOTPdiv" className="form-group" style={hideShow}>
+                                                    <div className="input-group">
+                                                        <input id="txtCode" type="number" className="form-control" placeholder="Verification Code"/>
+
+                                                        <span className="form-group input-group-btn">
+                                                        <button className="btn btn-primary" type="button" onClick={this.verifyCode}>Verify</button>
+                                                      </span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div id="lblMessageDiv" className="form-group" style={hideLblMessageDiv}>
+                                                    <label id="lblMessage"></label><br/>
+                                                    <a href="#" id="lblResend" style={hideLblMessageDiv} onClick={this.sendOTP}>Resend OTP</a>
+                                                </div>
+
+
+                                                
                                                 <div className="row">
                                                     <div className="col-xs-6">
                                                         <div className="form-group">
@@ -220,8 +342,9 @@ class VisitorDetails extends React.Component {
                                                     <div className="col-xs-6">
 
 
-                                                        <div className="form-group">
-                                                            <img src="./css/images/default.jpg" className="form-control" style={visitorImageHeight}/>
+                                                        <div id="imgDiv" className="form-group">
+                                                           <img src="./css/images/default.jpg" className="form-control" style={visitorImageHeight}/>
+
                                                         </div>
 
 
@@ -241,12 +364,16 @@ class VisitorDetails extends React.Component {
 
                                                         <div className="form-group">
 
-                                                              <button className="btn btn-success">
+                                                              <button className="btn btn-success" onClick={this.onCameraClick}>
                                                                   <span>
                                                                         <i className="fa fa-camera"></i>
                                                                     </span>
-                                                              </button>
+                                                              </button>&nbsp;
 
+                                                            <button className="btn btn-info" onClick={this.onCaptureClick}>
+                                                                Capture
+
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="col-xs-3">

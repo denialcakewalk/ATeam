@@ -201,8 +201,8 @@ color: #8d8888;
 -webkit-border-radius: 10px;
 -moz-border-radius: 10px;
 border-radius: 10px;
-max-height:170px;
-max-width:170px;
+max-height:230px;
+max-width:230px;
 }
 
 .navbar-cls-top .navbar-brand {
@@ -374,6 +374,16 @@ line-height: 1.428571429;
  border-radius: 0px; 
 }
    
+}
+
+.route-me {
+    cursor: pointer;
+}
+
+@media(max-width: 700px){
+    .imgBlueRidge{
+        display: none !important;
+    }
 }
 
 

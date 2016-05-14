@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+<<<<<<< HEAD
 import $ from 'jquery';
 
 class VisitorDetails extends React.Component {
@@ -24,10 +25,52 @@ class VisitorDetails extends React.Component {
             },
             error: function (xhr, err, status) {
                 console.error(err);
+=======
+import Idb from 'idb';
+
+
+class VisitorDetails extends React.Component {
+
+    verifyCode(e){
+        e.preventDefault();
+
+        var mobileNo = $("#txtMobile").val();
+        var codeVal = $("#txtCode").val();
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber:mobileNo, oneTimePassword: codeVal });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/verifyOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='Valid Code';
+                $('#lblMessage')[0].style.color='green';
+                $('#lblResend').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+            },
+            error: function (jqXHR, textStatus, ex) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='InValid Code';
+                $('#lblMessage')[0].style.color='red';
+                $('#lblResend').show();
+                // console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+>>>>>>> e6e9d017950be760bd4be46715d8f6cb295bc11e
             }
         });
     }
 
+<<<<<<< HEAD
     visitorCheckIn() {
         var VisitorName = $("#txtVisitorName").val().trim();
         var VisitorNum = $("#txtVisitorNum").val().trim();
@@ -107,6 +150,62 @@ class VisitorDetails extends React.Component {
         return <option key={verificationType._id} value={verificationType._id}>{verificationType.typename}</option>
     }
 
+=======
+    sendOTP(e){
+
+        e.preventDefault();
+        var mobileNo = $("#txtMobile").val();
+
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber: mobileNo });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/generateOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#veryfyOTPdiv').show();
+                $('#txtMobileDiv').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+
+            },
+            error: function (jqXHR, textStatus, ex) {
+                console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+            }
+        });
+    }
+
+    onCapturClick (e){
+        e.preventDefault();
+
+        Webcam.snap(function (data_uri){
+
+        });
+    }
+
+    onCameraClick (e){
+        e.preventDefault();
+
+
+        Webcam.set({
+            
+            height: 280,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#imgDiv');
+
+    }
+>>>>>>> e6e9d017950be760bd4be46715d8f6cb295bc11e
     render() {
 
         var visitorImageHeight = {
@@ -115,6 +214,14 @@ class VisitorDetails extends React.Component {
 
         var txtVisitorAddressStyle = {
             resize: 'none'
+        }
+
+        var hideShow= {
+            display:'none'
+        }
+
+        var hideLblMessageDiv = {
+            display:'none'
         }
 
 
@@ -186,7 +293,37 @@ class VisitorDetails extends React.Component {
                                                  </div>
                                                  </div>
                                                  */}
+<<<<<<< HEAD
 
+=======
+                                                <div id="txtMobileDiv" className="form-group">
+                                                    <div className="input-group">
+                                                        <input id="txtMobile" type="number" className="form-control" placeholder="Mobile Number"/>
+                                                     <span className="form-group input-group-btn">
+                                                        <button className="btn btn-primary" type="button" onClick={this.sendOTP}>Send OTP</button>
+                                                      </span>
+                                                    </div>
+                                                </div>
+
+                                                <div id="veryfyOTPdiv" className="form-group" style={hideShow}>
+                                                    <div className="input-group">
+                                                        <input id="txtCode" type="number" className="form-control" placeholder="Verification Code"/>
+
+                                                        <span className="form-group input-group-btn">
+                                                        <button className="btn btn-primary" type="button" onClick={this.verifyCode}>Verify</button>
+                                                      </span>
+                                                    </div>
+                                                </div>
+
+
+                                                <div id="lblMessageDiv" className="form-group" style={hideLblMessageDiv}>
+                                                    <label id="lblMessage"></label><br/>
+                                                    <a href="#" id="lblResend" style={hideLblMessageDiv} onClick={this.sendOTP}>Resend OTP</a>
+                                                </div>
+
+
+                                                
+>>>>>>> e6e9d017950be760bd4be46715d8f6cb295bc11e
                                                 <div className="row">
                                                     <div className="col-xs-6">
                                                         <div className="form-group">
@@ -307,10 +444,15 @@ class VisitorDetails extends React.Component {
                                                     <div className="col-xs-6">
 
 
+<<<<<<< HEAD
                                                         <div className="form-group">
 
                                                             <img src="./css/images/default.jpg" className="form-control"
                                                                  style={visitorImageHeight}/>
+=======
+                                                        <div id="imgDiv" className="form-group">
+                                                           <img src="./css/images/default.jpg" className="form-control" style={visitorImageHeight}/>
+>>>>>>> e6e9d017950be760bd4be46715d8f6cb295bc11e
 
                                                         </div>
 
@@ -331,12 +473,24 @@ class VisitorDetails extends React.Component {
 
                                                         <div className="form-group">
 
+<<<<<<< HEAD
                                                             <button className="btn btn-success">
                                                                   <span>
                                                                         <i className="fa fa-camera"></i>
                                                                     </span>
                                                             </button>
+=======
+                                                              <button className="btn btn-success" onClick={this.onCameraClick}>
+                                                                  <span>
+                                                                        <i className="fa fa-camera"></i>
+                                                                    </span>
+                                                              </button>&nbsp;
 
+                                                            <button className="btn btn-info" onClick={this.onCaptureClick}>
+                                                                Capture
+>>>>>>> e6e9d017950be760bd4be46715d8f6cb295bc11e
+
+                                                            </button>
                                                         </div>
                                                     </div>
                                                     <div className="col-xs-3">

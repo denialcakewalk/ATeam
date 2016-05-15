@@ -32,28 +32,6 @@ class StaffDetails extends React.Component {
         return <option key={verificationType._id} value={verificationType._id}>{verificationType.typename}</option>
     }
 
-    onCameraClick (e){
-        e.preventDefault();
-
-
-        Webcam.set({
-
-            height: 280,
-            image_format: 'jpeg',
-            jpeg_quality: 90
-        });
-        Webcam.attach('#imgDiv');
-
-    }
-
-    onCapturClick (e){
-        e.preventDefault();
-
-        Webcam.snap(function (data_uri){
-
-        });
-    }
-
     sendOTP(e){
 
         e.preventDefault();
@@ -76,18 +54,19 @@ class StaffDetails extends React.Component {
             data: data,
             success: function (data) {
                 $('#veryfyOTPdiv').show();
-                $('#txtMobileDiv').hide();
+                //$('#txtMobileDiv').hide();
                 // var resp = JSON.parse(data)
                 // console.log(resp.status);
 
             },
             error: function (jqXHR, textStatus, ex) {
+                $('#btnSendOtp').html('Resend OTP');
                 console.log(textStatus + "," + ex + "," + jqXHR.responseText);
             }
         });
     }
 
-    visitorCheckIn() {
+    staffCheckIn() {
         var VisitorName = $("#txtVisitorName").val().trim();
         var VisitorNum = $("#txtVisitorNum").val().trim();
         var VisitorAddress = $("#txtVisitorAddress").val().trim();
@@ -184,6 +163,9 @@ class StaffDetails extends React.Component {
                 $('#lblMessage')[0].textContent='Valid Code';
                 $('#lblMessage')[0].style.color='green';
                 $('#lblResend').hide();
+                $('#lblMessageDiv').hide();
+                $('#lblMessage').hide();
+                $('#veryfyOTPdiv').hide();
                 // var resp = JSON.parse(data)
                 // console.log(resp.status);
             },
@@ -196,6 +178,35 @@ class StaffDetails extends React.Component {
             }
         });
     }
+
+    onCaptureClick (e){
+        e.preventDefault();
+        // imgDiv
+        Webcam.snap(function (data_uri){
+            var img=new Image();
+            img.src=data_uri;
+            img.id = 'imgToDisplay';
+            var dv=$('#imgDiv');
+            dv.empty();
+            dv.append(img);
+            //$('#visitorImg')[0].src=data_uri;
+        });
+    }
+
+    onCameraClick (e){
+        e.preventDefault();
+
+
+        Webcam.set({
+
+            height: 280,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#imgDiv');
+
+    }
+
 
 
 
@@ -212,15 +223,12 @@ class StaffDetails extends React.Component {
             resize: 'none'
         }
 
-        var hideShow = {
-            display: 'none'
-        }
 
         var hideLblMessageDiv = {
             display: 'none'
         }
 
-        var hideShow = {
+        var hideShowVerifyDiv = {
             display: 'none'
         }
 
@@ -236,7 +244,7 @@ class StaffDetails extends React.Component {
                         <div className="col-md-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    Visitor's Details
+                                    Staff's Details
                                 </div>
                                 <div className="panel-body">
                                     <div className="row">
@@ -244,22 +252,22 @@ class StaffDetails extends React.Component {
                                             <form role="form">
                                                 <div className="form-group">
                                                     <input id="txtVisitorName" className="form-control"
-                                                           placeholder="Visitor's Name"/>
+                                                           placeholder="Staff's Name"/>
                                                 </div>
 
                                                 <div id="txtMobileDiv" className="form-group">
                                                     <div className="input-group">
-                                                        <input id="txtVisitorNum" type="number" className="form-control"
+                                                        <input id="txtVisitorNum" maxLength="10" type="number" className="form-control"
                                                                placeholder="Mobile Number"/>
                                                      <span className="form-group input-group-btn">
-                                                        <button className="btn btn-primary" type="button"
+                                                        <button id="btnSendOtp" className="btn btn-primary" type="button"
                                                                 onClick={this.sendOTP}>Send OTP
                                                         </button>
                                                       </span>
                                                     </div>
                                                 </div>
 
-                                                <div id="veryfyOTPdiv" className="form-group" style={hideShow}>
+                                                <div id="veryfyOTPdiv" className="form-group" style={hideShowVerifyDiv}>
                                                     <div className="input-group">
                                                         <input id="txtCode" type="number" className="form-control"
                                                                placeholder="Verification Code"/>
@@ -290,7 +298,7 @@ class StaffDetails extends React.Component {
                                                     <label>Gender :</label>&nbsp;&nbsp;
 
                                                     <div className="btn-group" data-toggle="buttons">
-                                                        <label className="btn btn-default">
+                                                        <label className="btn btn-default active">
                                                             <input type="radio" id="radioMale" name="rdoVisitorGender"
                                                                    value="Male"/> Male
                                                         </label>
@@ -553,7 +561,7 @@ class StaffDetails extends React.Component {
                      </div>
                      </div>
                      */}
-                    <button className="btn btn-primary" onClick={this.visitorCheckIn}>Check In</button>
+                    <button className="btn btn-primary" onClick={this.staffCheckIn}>Check In</button>
                     &nbsp;
                     <button className="btn btn-primary">Edit</button>
                     &nbsp;
@@ -561,7 +569,6 @@ class StaffDetails extends React.Component {
                     &nbsp;
                     <button className="btn btn-success">New</button>
                     &nbsp;
-
                 </div>
 
             </div>

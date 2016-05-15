@@ -1,6 +1,6 @@
 import React from 'react';
 
-class StaffOut extends React.Component {
+class StaffIn extends React.Component {
     render() {
 
 
@@ -24,7 +24,7 @@ class StaffOut extends React.Component {
                         <div className="col-md-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    Staff Check Out
+                                    Staff Check In
                                 </div>
                                 <div className="panel-body">
                                     <div className="row">
@@ -113,7 +113,7 @@ class StaffOut extends React.Component {
                                         <div className="col-md-4 col-xs-4">
                                             <form role="form">
                                                 <div className="form-group">
-                                                    <button className="btn btn-primary btn-md">Out</button>
+                                                    <button className="btn btn-primary btn-md">In</button>
 
                                                 </div>
 
@@ -141,4 +141,4 @@ class StaffOut extends React.Component {
     }
 }
 
-export default StaffOut;
+export default StaffIn;

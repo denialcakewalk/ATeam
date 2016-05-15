@@ -15,14 +15,12 @@ class PersonDetails extends React.Component {
         var Gender = $("[name='rdoGender']:checked").val();
         var ContactNum = $("#txtContactNumber").val().trim();
 
-        var imgSrc='';
+        var imgSrc = $('#imgDiv img').length == 0 ? "/assets/img/default.jpg" : $('#imgDiv img').attr("src");
         var imgCapture = $("#imgToDisplay");
-        if(imgCapture){
-            imgSrc = imgCapture.src;
-        }
 
         if ((OwnerName && TowerNum && FlatNum && Gender && ContactNum) != "") {
             $.ajax({
+                async: true,
                 type: "POST",
                 url: "http://192.101.102.165:4030/api/persondetails",
                 data: {
@@ -35,7 +33,6 @@ class PersonDetails extends React.Component {
                 },
                 dataType: "json",
                 success: function (data) {
-                    if (data != "")
                         console.log(data);
                 },
                 error: function (xhr, err, status) {
@@ -62,20 +59,20 @@ class PersonDetails extends React.Component {
 
     }
 
-    verifyCode(e){
+    verifyCode(e) {
         e.preventDefault();
 
         var mobileNo = $("#txtMobile").val();
         var codeVal = $("#txtCode").val();
 
-        var data = JSON.stringify({ countryCode: "91", mobileNumber:mobileNo, oneTimePassword: codeVal });
+        var data = JSON.stringify({countryCode: "91", mobileNumber: mobileNo, oneTimePassword: codeVal});
         $.ajax({
             url: 'https://sendotp.msg91.com/api/verifyOTP',
             type: 'POST',
             crossDomain: true,
             processData: false,
             contentType: 'application/json',
-            headers: { 'Access-Control-Allow-Origin': '*' },
+            headers: {'Access-Control-Allow-Origin': '*'},
             beforeSend: function (request) {
                 request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
                 request.setRequestHeader("Secret-Key", "sumit@12345");
@@ -84,36 +81,36 @@ class PersonDetails extends React.Component {
             data: data,
             success: function (data) {
                 $('#lblMessageDiv').show();
-                $('#lblMessage')[0].textContent='Valid Code';
-                $('#lblMessage')[0].style.color='green';
+                $('#lblMessage')[0].textContent = 'Valid Code';
+                $('#lblMessage')[0].style.color = 'green';
                 $('#lblResend').hide();
                 // var resp = JSON.parse(data)
                 // console.log(resp.status);
             },
             error: function (jqXHR, textStatus, ex) {
                 $('#lblMessageDiv').show();
-                $('#lblMessage')[0].textContent='InValid Code';
-                $('#lblMessage')[0].style.color='red';
+                $('#lblMessage')[0].textContent = 'InValid Code';
+                $('#lblMessage')[0].style.color = 'red';
                 $('#lblResend').show();
                 // console.log(textStatus + "," + ex + "," + jqXHR.responseText);
             }
         });
     }
 
-    sendOTP(e){
+    sendOTP(e) {
 
         e.preventDefault();
         var mobileNo = $("#txtMobile").val();
 
 
-        var data = JSON.stringify({ countryCode: "91", mobileNumber: mobileNo });
+        var data = JSON.stringify({countryCode: "91", mobileNumber: mobileNo});
         $.ajax({
             url: 'https://sendotp.msg91.com/api/generateOTP',
             type: 'POST',
             crossDomain: true,
             processData: false,
             contentType: 'application/json',
-            headers: { 'Access-Control-Allow-Origin': '*' },
+            headers: {'Access-Control-Allow-Origin': '*'},
             beforeSend: function (request) {
                 request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
                 request.setRequestHeader("Secret-Key", "sumit@12345");
@@ -133,21 +130,21 @@ class PersonDetails extends React.Component {
         });
     }
 
-    onCaptureClick (e){
+    onCaptureClick(e) {
         e.preventDefault();
         // imgDiv
-        Webcam.snap(function (data_uri){
-            var img=new Image();
-            img.src=data_uri;
+        Webcam.snap(function (data_uri) {
+            var img = new Image();
+            img.src = data_uri;
             img.id = 'imgToDisplay';
-            var dv=$('#imgDiv');
+            var dv = $('#imgDiv');
             dv.empty();
             dv.append(img);
             //$('#visitorImg')[0].src=data_uri;
         });
     }
 
-    onCameraClick (e){
+    onCameraClick(e) {
         e.preventDefault();
 
 
@@ -181,12 +178,13 @@ class PersonDetails extends React.Component {
                             <h5>Welcome Jhon Deo , Love to see you back. </h5>
                         </div>
                         <div className="col-md-6">
-                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right">Add
+                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right" data-toggle="collapse" data-target="#addPersonDetailsDiv">Add
                             </button>
                         </div>
                     </div>
                     <hr/>
-                    <div className="row">
+
+                    <div id="addPersonDetailsDiv" className="row collapse">
                         <div className="col-md-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
@@ -229,13 +227,13 @@ class PersonDetails extends React.Component {
                                                     <label>Gender :</label>&nbsp;&nbsp;
 
                                                     <div className="btn-group" data-toggle="buttons">
-                                                        <label className="btn btn-default">
+                                                        <label className="btn btn-default active">
                                                             <input type="radio" id="radioMale" name="rdoGender"
-                                                                   value="1"/> Male
+                                                                   value="Male" defaultChecked="checked"/> Male
                                                         </label>
                                                         <label className="btn btn-default">
                                                             <input type="radio" id="radioFemale" name="rdoGender"
-                                                                   value="2"/> Female
+                                                                   value="Female"/> Female
                                                         </label>
 
                                                     </div>
@@ -293,13 +291,16 @@ class PersonDetails extends React.Component {
 
                                                         <div className="form-group">
 
-                                                            <button className="btn btn-success" onClick={this.onCameraClick}>
+                                                            <button className="btn btn-success"
+                                                                    onClick={this.onCameraClick}>
                                                                   <span>
                                                                         <i className="fa fa-camera"></i>
                                                                     </span>
-                                                            </button>&nbsp;
+                                                            </button>
+                                                            &nbsp;
 
-                                                            <button className="btn btn-info" onClick={this.onCaptureClick}>
+                                                            <button className="btn btn-info"
+                                                                    onClick={this.onCaptureClick}>
                                                                 Capture
 
                                                             </button>
@@ -357,15 +358,13 @@ class PersonDetails extends React.Component {
 
                         </div>
 
+                        <button className="btn btn-primary" onClick={this.savePersonDetails}>Save</button>
+                        &nbsp;
+                        <button className="btn btn-primary">Edit</button>
+                        &nbsp;
+                        <button className="btn btn-primary">Delete</button>
 
                     </div>
-
-                    <button className="btn btn-primary" onClick={this.savePersonDetails}>Save</button>
-                    &nbsp;
-                    <button className="btn btn-primary">Edit</button>
-                    &nbsp;
-                    <button className="btn btn-primary">Delete</button>
-
 
                 </div>
 

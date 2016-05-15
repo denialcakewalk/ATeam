@@ -80,13 +80,16 @@ class VisitorDetails extends React.Component {
     }
 
     visitorCheckIn() {
+
+
         var VisitorName = $("#txtVisitorName").val().trim();
         var VisitorNum = $("#txtVisitorNum").val().trim();
         var VisitorAddress = $("#txtVisitorAddress").val().trim();
-        var VisitorGender = $("[name='rdoVisitorGender']:checked").val().trim();
+        var VisitorGender = $("[name='rdoVisitorGender']:checked").length == 1 ? $("[name='rdoVisitorGender']:checked").val().trim() : "";
         var VerificationTypeId = ""; //$("#dlVerificationType:selected").val().trim();
         var VerificationTypeNum = $("#txtVerificationNum").val().trim();
         var VerificationVehicleNum = $("#txtVisitorVehicleNum").val().trim();
+        var PhotoSrc = $('#imgDiv img').length == 0 ? "/assets/img/default.jpg" : $('#imgDiv img').attr("src");
         var TowerNum = $("#dlTowerNum option:selected").val().trim();
         var FlatNum = $("#txtFlatNum").val().trim();
         var Purpose = $("#txtPurpose").val().trim();
@@ -108,7 +111,7 @@ class VisitorDetails extends React.Component {
                     towernumber: TowerNum,
                     flatnumber: FlatNum,
                     visitortypeid: "57375b8ae8f44693cbb3e084",
-                    photo: "",
+                    photo: PhotoSrc,
                     photoproof: ""
                 },
                 dataType: "json",
@@ -149,6 +152,21 @@ class VisitorDetails extends React.Component {
             if (VisitorId != "") {
             }
         }
+
+
+    }
+
+    clearControls(){
+        $("#txtVisitorName").val("");
+        $("#txtVisitorNum").val("");
+        $("#txtVisitorAddress").val("");
+        $("[name='rdoVisitorGender']").prop("checked", true);
+        //$("#dlVerificationType:selected").val().trim();
+        $("#txtVerificationNum").val("");
+        $("#txtVisitorVehicleNum").val("");
+        $("dlTowerNum option:nth(0)").attr("selected", "selected");
+        $("#txtFlatNum").val("");
+        $("#txtPurpose").val("");
     }
 
     verifyCode(e){
@@ -294,9 +312,9 @@ class VisitorDetails extends React.Component {
                                                     <label>Gender :</label>&nbsp;&nbsp;
 
                                                     <div className="btn-group" data-toggle="buttons">
-                                                        <label className="btn btn-default">
+                                                        <label className="btn btn-default active">
                                                             <input type="radio" id="radioMale" name="rdoVisitorGender"
-                                                                   value="Male"/> Male
+                                                                   value="Male" defaultChecked="checked" /> Male
                                                         </label>
                                                         <label className="btn btn-default">
                                                             <input type="radio" id="radioFemale" name="rdoVisitorGender"

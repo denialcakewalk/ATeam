@@ -6,6 +6,68 @@ import idb from 'idb';
 
 @autobind
 class PersonDetails extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            persons: []
+        }
+
+        var personState = this;
+        $.ajax({
+            async: true,
+            type: "GET",
+            url: "http://192.101.102.165:4030/api/persondetails",
+            success: function (data) {
+                personState.setState({persons: data});
+            },
+            error: function (xhr, err, status) {
+                console.error(err);
+            }
+        });
+    }
+
+    renderPersons(_person){
+        return (
+            <div className="panel-group" key={_person._id}>
+                <div className="panel panel-default">
+                    <div className="panel-heading">
+                        <h4 className="panel-title pull-left  setFontOnSmallScreen">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                               className="collapsed">{_person.name}</a>
+                        </h4>
+
+                        <a href="#">
+                            <i className="fa fa-trash-o fa-2x pull-right"></i>
+                            <i className="fa fa-pencil fa-2x pull-right"></i>
+                        </a>
+                        <div className="clearfix"></div>
+
+                    </div>
+                    <div id="collapseOne" className="panel-collapse collapse">
+
+                        <div className="panel-body">
+                            <form role="form">
+                                <div className="form-group">
+                                    <span>{_person.name}</span>
+                                </div>
+
+                                <div className="form-group">
+                                    <span >{_person.contactnumber}</span>
+                                </div>
+                                <div className="form-group">
+                                    <span >Tower-{_person.towernumber}</span>&nbsp;<span >Flat No: {_person.faltnumber}</span>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        )
+    }
+
     savePersonDetails() {
         // PersonDetailsModal.setState({view: {showModal: true}});
         debugger;
@@ -59,7 +121,7 @@ class PersonDetails extends React.Component {
                 },
                 dataType: "json",
                 success: function (data) {
-                        console.log(data);
+                    console.log(data);
                 },
                 error: function (xhr, err, status) {
                     console.error(err);
@@ -124,11 +186,11 @@ class PersonDetails extends React.Component {
         }
 
         var heightCollapse = {
-            height:0
+            height: 0
         }
 
         var paddingIcons = {
-            paddingLeft:10
+            paddingLeft: 10
         }
 
         return (
@@ -141,55 +203,17 @@ class PersonDetails extends React.Component {
                             <h5>Welcome Jhon Deo , Love to see you back. </h5>
                         </div>
                         <div className="col-md-6">
-                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right" data-toggle="collapse" data-target="#addPersonDetailsDiv">Add
+                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right"
+                                    data-toggle="collapse" data-target="#addPersonDetailsDiv">Add
                             </button>
                         </div>
                     </div>
                     <hr/>
 
 
-
-
                     <div id="OwnerDetailsGrid">
-
-                        <div className="panel-group" id="accordion">
-                        <div className="panel panel-default">
-                            <div className="panel-heading">
-                                <h4 className="panel-title pull-left  setFontOnSmallScreen">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">Cakewalk Employee : Nisarg Pareek</a>
-                                </h4>
-
-                                <a href="#">
-                                    <i className="fa fa-trash-o fa-2x pull-right" style={paddingIcons}></i>
-                                    <i className="fa fa-pencil fa-2x pull-right"></i>
-                                </a>
-                                <div className="clearfix"></div>
-
-                            </div>
-                            <div id="collapseOne" className="panel-collapse collapse" style={heightCollapse}>
-                                <div className="panel-body">
-                                    <form role="form">
-                                        <div className="form-group">
-                                            <span>John Ramesh Patel</span>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <span >9876787654</span>
-                                        </div>
-                                        <div className="form-group">
-                                            <span >Tower-1</span>&nbsp;<span >Flat No: 2015</span>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-
+                        {this.state.persons.map(this.renderPersons)}
                     </div>
-
-                    </div>
-
-
-
 
 
                     <div id="addPersonDetailsDiv" className="row collapse">

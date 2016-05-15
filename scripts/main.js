@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 import PersonDetails from './components/PersonDetails';
 import VisitorDetails from './components/VisitorDetails';
 import StaffDetails from './components/StaffDetails';
-import CheckOut from './components/CheckOut';
+import VisitorOut from './components/VisitorOut';
 import StaffOut from './components/StaffOut';
 import StaffIn from './components/StaffIn';
 
@@ -25,7 +25,7 @@ var routes = (
         <Route path="/PersonDetails" component={PersonDetails}/>
         <Route path="/VisitorDetails" component={VisitorDetails}/>
         <Route path="/StaffDetails" component={StaffDetails}/>
-        <Route path="/CheckOut" component={CheckOut}/>
+        <Route path="/VisitorOut" component={VisitorOut}/>
         <Route path="/StaffOut" component={StaffOut}/>
         <Route path="/StaffIn" component={StaffIn}/>
 

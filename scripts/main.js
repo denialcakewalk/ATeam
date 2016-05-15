@@ -12,6 +12,7 @@ import VisitorDetails from './components/VisitorDetails';
 import StaffDetails from './components/StaffDetails';
 import CheckOut from './components/CheckOut';
 import StaffOut from './components/StaffOut';
+import StaffIn from './components/StaffIn';
 
 /*
  Routes
@@ -25,6 +26,7 @@ var routes = (
         <Route path="/StaffDetails" component={StaffDetails}/>
         <Route path="/CheckOut" component={CheckOut}/>
         <Route path="/StaffOut" component={StaffOut}/>
+        <Route path="/StaffIn" component={StaffIn}/>
 
     </Router>
 );

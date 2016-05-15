@@ -15,6 +15,12 @@ class PersonDetails extends React.Component {
         var Gender = $("[name='rdoGender']:checked").val();
         var ContactNum = $("#txtContactNumber").val().trim();
 
+        var imgSrc='';
+        var imgCapture = $("#imgToDisplay");
+        if(imgCapture){
+            imgSrc = imgCapture.src;
+        }
+
         if ((OwnerName && TowerNum && FlatNum && Gender && ContactNum) != "") {
             $.ajax({
                 type: "POST",
@@ -25,7 +31,7 @@ class PersonDetails extends React.Component {
                     faltnumber: FlatNum,
                     gender: Gender,
                     contactnumber: ContactNum,
-                    photo: ""
+                    photo: imgSrc
                 },
                 dataType: "json",
                 success: function (data) {
@@ -53,6 +59,105 @@ class PersonDetails extends React.Component {
 
 
     openModal() {
+
+    }
+
+    verifyCode(e){
+        e.preventDefault();
+
+        var mobileNo = $("#txtMobile").val();
+        var codeVal = $("#txtCode").val();
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber:mobileNo, oneTimePassword: codeVal });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/verifyOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='Valid Code';
+                $('#lblMessage')[0].style.color='green';
+                $('#lblResend').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+            },
+            error: function (jqXHR, textStatus, ex) {
+                $('#lblMessageDiv').show();
+                $('#lblMessage')[0].textContent='InValid Code';
+                $('#lblMessage')[0].style.color='red';
+                $('#lblResend').show();
+                // console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+            }
+        });
+    }
+
+    sendOTP(e){
+
+        e.preventDefault();
+        var mobileNo = $("#txtMobile").val();
+
+
+        var data = JSON.stringify({ countryCode: "91", mobileNumber: mobileNo });
+        $.ajax({
+            url: 'https://sendotp.msg91.com/api/generateOTP',
+            type: 'POST',
+            crossDomain: true,
+            processData: false,
+            contentType: 'application/json',
+            headers: { 'Access-Control-Allow-Origin': '*' },
+            beforeSend: function (request) {
+                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
+                request.setRequestHeader("Secret-Key", "sumit@12345");
+            },
+            dataType: 'json',
+            data: data,
+            success: function (data) {
+                $('#veryfyOTPdiv').show();
+                $('#txtMobileDiv').hide();
+                // var resp = JSON.parse(data)
+                // console.log(resp.status);
+
+            },
+            error: function (jqXHR, textStatus, ex) {
+                console.log(textStatus + "," + ex + "," + jqXHR.responseText);
+            }
+        });
+    }
+
+    onCaptureClick (e){
+        e.preventDefault();
+        // imgDiv
+        Webcam.snap(function (data_uri){
+            var img=new Image();
+            img.src=data_uri;
+            img.id = 'imgToDisplay';
+            var dv=$('#imgDiv');
+            dv.empty();
+            dv.append(img);
+            //$('#visitorImg')[0].src=data_uri;
+        });
+    }
+
+    onCameraClick (e){
+        e.preventDefault();
+
+
+        Webcam.set({
+
+            height: 280,
+            image_format: 'jpeg',
+            jpeg_quality: 90
+        });
+        Webcam.attach('#imgDiv');
 
     }
 
@@ -165,8 +270,8 @@ class PersonDetails extends React.Component {
                                                     <div className="col-xs-6">
 
 
-                                                        <div className="form-group">
-                                                            <img src="/assets/img/default.jpg"
+                                                        <div id="imgDiv" className="form-group">
+                                                            <img id="visitorImg" src="/assets/img/default.jpg"
                                                                  className="form-control img-responsive"
                                                                  placeholder="Visitor's Name"
                                                                  style={visitorImageHeight}/>
@@ -188,10 +293,15 @@ class PersonDetails extends React.Component {
 
                                                         <div className="form-group">
 
-                                                            <button className="btn btn-success">
+                                                            <button className="btn btn-success" onClick={this.onCameraClick}>
                                                                   <span>
                                                                         <i className="fa fa-camera"></i>
                                                                     </span>
+                                                            </button>&nbsp;
+
+                                                            <button className="btn btn-info" onClick={this.onCaptureClick}>
+                                                                Capture
+
                                                             </button>
 
                                                         </div>

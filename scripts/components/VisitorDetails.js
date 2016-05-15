@@ -68,12 +68,13 @@ class VisitorDetails extends React.Component {
             data: data,
             success: function (data) {
                 $('#veryfyOTPdiv').show();
-                $('#txtMobileDiv').hide();
+                //$('#txtMobileDiv').hide();
                 // var resp = JSON.parse(data)
                 // console.log(resp.status);
 
             },
             error: function (jqXHR, textStatus, ex) {
+                $('#btnSendOtp').html('Resend OTP');
                 console.log(textStatus + "," + ex + "," + jqXHR.responseText);
             }
         });
@@ -194,6 +195,9 @@ class VisitorDetails extends React.Component {
                 $('#lblMessage')[0].textContent='Valid Code';
                 $('#lblMessage')[0].style.color='green';
                 $('#lblResend').hide();
+                $('#lblMessageDiv').hide();
+                $('#lblMessage').hide();
+                $('#veryfyOTPdiv').hide();
                 // var resp = JSON.parse(data)
                 // console.log(resp.status);
             },
@@ -215,7 +219,7 @@ class VisitorDetails extends React.Component {
             img.src=data_uri;
             img.id = 'imgToDisplay';
            // img.className = 'form-control img-responsive';
-            img.height = '180';
+           // img.height = '180';
 
             var dv=$('#imgDiv');
             dv.empty();
@@ -242,7 +246,11 @@ class VisitorDetails extends React.Component {
             display: 'none'
         }
 
-        var hideShow = {
+        var hideLblMessageDiv = {
+            display: 'none'
+        }
+
+        var hideShowVerifyDiv = {
             display: 'none'
         }
 
@@ -271,17 +279,17 @@ class VisitorDetails extends React.Component {
 
                                                 <div id="txtMobileDiv" className="form-group">
                                                     <div className="input-group">
-                                                        <input id="txtVisitorNum" type="number" className="form-control"
+                                                        <input id="txtVisitorNum" maxLength="10" type="number" className="form-control"
                                                                placeholder="Mobile Number"/>
                                                      <span className="form-group input-group-btn">
-                                                        <button className="btn btn-primary" type="button"
+                                                        <button id="btnSendOtp" className="btn btn-primary" type="button"
                                                                 onClick={this.sendOTP}>Send OTP
                                                         </button>
                                                       </span>
                                                     </div>
                                                 </div>
 
-                                                <div id="veryfyOTPdiv" className="form-group" style={hideShow}>
+                                                <div id="veryfyOTPdiv" className="form-group" style={hideShowVerifyDiv}>
                                                     <div className="input-group">
                                                         <input id="txtCode" type="number" className="form-control"
                                                                placeholder="Verification Code"/>
@@ -293,6 +301,7 @@ class VisitorDetails extends React.Component {
                                                       </span>
                                                     </div>
                                                 </div>
+
 
 
                                                 <div id="lblMessageDiv" className="form-group"

@@ -59,77 +59,6 @@ class PersonDetails extends React.Component {
 
     }
 
-    verifyCode(e) {
-        e.preventDefault();
-
-        var mobileNo = $("#txtMobile").val();
-        var codeVal = $("#txtCode").val();
-
-        var data = JSON.stringify({countryCode: "91", mobileNumber: mobileNo, oneTimePassword: codeVal});
-        $.ajax({
-            url: 'https://sendotp.msg91.com/api/verifyOTP',
-            type: 'POST',
-            crossDomain: true,
-            processData: false,
-            contentType: 'application/json',
-            headers: {'Access-Control-Allow-Origin': '*'},
-            beforeSend: function (request) {
-                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
-                request.setRequestHeader("Secret-Key", "sumit@12345");
-            },
-            dataType: 'json',
-            data: data,
-            success: function (data) {
-                $('#lblMessageDiv').show();
-                $('#lblMessage')[0].textContent = 'Valid Code';
-                $('#lblMessage')[0].style.color = 'green';
-                $('#lblResend').hide();
-                // var resp = JSON.parse(data)
-                // console.log(resp.status);
-            },
-            error: function (jqXHR, textStatus, ex) {
-                $('#lblMessageDiv').show();
-                $('#lblMessage')[0].textContent = 'InValid Code';
-                $('#lblMessage')[0].style.color = 'red';
-                $('#lblResend').show();
-                // console.log(textStatus + "," + ex + "," + jqXHR.responseText);
-            }
-        });
-    }
-
-    sendOTP(e) {
-
-        e.preventDefault();
-        var mobileNo = $("#txtMobile").val();
-
-
-        var data = JSON.stringify({countryCode: "91", mobileNumber: mobileNo});
-        $.ajax({
-            url: 'https://sendotp.msg91.com/api/generateOTP',
-            type: 'POST',
-            crossDomain: true,
-            processData: false,
-            contentType: 'application/json',
-            headers: {'Access-Control-Allow-Origin': '*'},
-            beforeSend: function (request) {
-                request.setRequestHeader("Package-Name", "vms.firebaseapp.com");
-                request.setRequestHeader("Secret-Key", "sumit@12345");
-            },
-            dataType: 'json',
-            data: data,
-            success: function (data) {
-                $('#veryfyOTPdiv').show();
-                $('#txtMobileDiv').hide();
-                // var resp = JSON.parse(data)
-                // console.log(resp.status);
-
-            },
-            error: function (jqXHR, textStatus, ex) {
-                console.log(textStatus + "," + ex + "," + jqXHR.responseText);
-            }
-        });
-    }
-
     onCaptureClick(e) {
         e.preventDefault();
         // imgDiv
@@ -168,6 +97,14 @@ class PersonDetails extends React.Component {
             display: 'none'
         }
 
+        var heightCollapse = {
+            height:0
+        }
+
+        var paddingIcons = {
+            paddingLeft:10
+        }
+
         return (
 
             <div>
@@ -183,6 +120,51 @@ class PersonDetails extends React.Component {
                         </div>
                     </div>
                     <hr/>
+
+
+
+
+                    <div id="OwnerDetailsGrid">
+
+                        <div className="panel-group" id="accordion">
+                        <div className="panel panel-default">
+                            <div className="panel-heading">
+                                <h4 className="panel-title pull-left  setFontOnSmallScreen">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed">Cakewalk Employee : Nisarg Pareek</a>
+                                </h4>
+
+                                <a href="#">
+                                    <i className="fa fa-trash-o fa-2x pull-right" style={paddingIcons}></i>
+                                    <i className="fa fa-pencil fa-2x pull-right"></i>
+                                </a>
+                                <div className="clearfix"></div>
+
+                            </div>
+                            <div id="collapseOne" className="panel-collapse collapse" style={heightCollapse}>
+                                <div className="panel-body">
+                                    <form role="form">
+                                        <div className="form-group">
+                                            <span>John Ramesh Patel</span>
+                                        </div>
+
+                                        <div className="form-group">
+                                            <span >9876787654</span>
+                                        </div>
+                                        <div className="form-group">
+                                            <span >Tower-1</span>&nbsp;<span >Flat No: 2015</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    </div>
+
+
+
+
 
                     <div id="addPersonDetailsDiv" className="row collapse">
                         <div className="col-md-12">
@@ -241,18 +223,9 @@ class PersonDetails extends React.Component {
 
 
                                                 <div className="form-group">
-                                                    <div className="input-group">
-                                                        <input id="txtContactNumber" type="number"
-                                                               className="form-control"
-                                                               placeholder="Mobile Number"/>
-                                                     <span className="form-group input-group-btn">
-                                                        <button className="btn btn-primary" type="button"
-                                                                onClick={this.mobVerify}>Verify
-                                                        </button>
-                                                      </span>
-                                                    </div>
+                                                    <input id="txtContactNumber" type="number" className="form-control"
+                                                           placeholder="Mobile Number"/>
                                                 </div>
-
                                             </form>
 
                                         </div>

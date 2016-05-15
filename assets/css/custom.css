@@ -401,3 +401,8 @@ line-height: 1.428571429;
     border-bottom: 1px solid grey;
 }
 
+@media(max-width: 430px) {
+    .setFontOnSmallScreen{
+        font-size: 12px;
+    }
+}

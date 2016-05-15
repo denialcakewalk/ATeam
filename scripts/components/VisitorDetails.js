@@ -98,7 +98,33 @@ class VisitorDetails extends React.Component {
 
         if ((VisitorName && VisitorNum && VisitorAddress && VisitorGender && VerificationTypeNum && VerificationVehicleNum && TowerNum && FlatNum && Purpose) != "") {
             var VisitorId = "";
+            var dbPromise = idb.open('newvisitors', 1, function (upgradeDb) {
+                var newvisitorsStore = upgradeDb.createObjectStore('newvisitors', { keyPath: 'id' });
+            });
 
+            return dbPromise.then(function (db) {
+                var tx = db.transaction('newvisitors', 'readwrite');
+                var newvisitorsStore = tx.objectStore('newvisitors');
+
+                newvisitorsStore.put({
+                    name: VisitorName,
+                    address: VisitorAddress,
+                    gender: VisitorGender,
+                    contactnumber: VisitorNum,
+                    verificationtypeid: VerificationTypeId,
+                    verificationnumber: VerificationTypeNum,
+                    towernumber: TowerNum,
+                    flatnumber: FlatNum,
+                    visitortypeid: "57375b8ae8f44693cbb3e084",
+                    photo: PhotoSrc,
+                    photoproof: "",
+                    id: Math.random().toString(36).slice(2),
+                    isSync:false
+                });
+                return tx.complete;
+            }).then(function () {
+                console.log('Added');
+            });
             $.ajax({
                 async: true,
                 type: "POST",

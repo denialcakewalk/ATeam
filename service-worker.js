@@ -1,5 +1,5 @@
 ﻿
-var staticCacheName = 'vms-static-v6';
+var staticCacheName = 'vms-static-v1';
 
 self.addEventListener('install', function (event) {
     console.log("install a fetch !");

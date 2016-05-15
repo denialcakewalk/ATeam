@@ -19,7 +19,6 @@ class VisitorDetails extends React.Component {
             type: "GET",
             url: "http://192.101.102.165:4030/api/verificationtypes",
             success: function (data) {
-
                 verificationState.setState({verificationTypes: data});
             },
             error: function (xhr, err, status) {

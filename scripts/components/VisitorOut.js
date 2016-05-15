@@ -14,34 +14,72 @@ class CheckOut extends React.Component {
             type: "GET",
             url: "http://192.101.102.165:4030/checkoutlist",
         }).done(function (data) {
-            if(data.length > 0)
-            {
+            if (data.length > 0) {
                 debugger;
                 var VisitorLists = [];
                 var VisitorIDs = data.map(function (_data) {
-                    return _data.visitorid;
-                });
-                VisitorIDs.filter(function(VisitorId) {
                     $.ajax({
-                       async:true,
-                        type:"GET",
-                        url:"http://192.101.102.165:4030/newvisitors/visitor/" + VisitorId,
+                        async: true,
+                        type: "GET",
+                        url: "http://192.101.102.165:4030/newvisitors/visitor/" + _data.visitorid,
                     }).done(function (checkInData) {
+                        checkInData[0].visitorid = _data._id;
+                        // VisitorLists.push(checkInData);
                         VisitorLists.push(checkInData);
+
+                        checkInState.setState({visitorCheckIns: VisitorLists});
                     }).fail(function (xhr, status, err) {
                         console.error(err);
-                    }).then(function (checkInData) {
-                        debugger;
                     });
-                })
+                });
+                VisitorIDs.filter(function (VisitorId) {
 
-                checkInState.setState({visitorCheckIns:VisitorLists});
+                })
             }
         }).fail(function (xhr, status, err) {
             console.log(err);
         });
 
     }
+
+    renderVisitorCheckIns(visitorCheckIn) {
+        visitorCheckIn = visitorCheckIn[0];
+        return (
+            <div key={visitorCheckIn._id}>
+                <div className="row">
+                    <div className="col-md-2 col-xs-3">
+                        <form role="form">
+                            <div className="form-group">
+                                <img className="form-control"
+                                     src={visitorCheckIn.photo == "" || visitorCheckIn.photo == undefined ? "/assets/img/default.jpg" : visitorCheckIn.photo}
+                                     className="img-responsive"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="col-md-6 col-xs-5">
+                        <form role="form">
+                            <div className="form-group">
+                                <label className="outPersonName">{visitorCheckIn.name}</label>
+                                <div>{visitorCheckIn.contactnumber}</div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div className="col-md-4 col-xs-2">
+                        <form role="form">
+                            <div className="form-group">
+                                <button className="btn btn-primary btn-md" data-visitorid={visitorCheckIn.visitorid}>OUT
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                <hr/>
+            </div>
+        )
+    }
+
 
     searchVisitor() {
 
@@ -132,40 +170,9 @@ class CheckOut extends React.Component {
 
                                     </div>
 
-
-                                    <div className="row">
-
-                                        <div className="col-md-2 col-xs-3">
-                                            <form role="form">
-                                                <div className="form-group">
-                                                    <img className="form-control" src="./css/images/default.jpg"
-                                                         className="img-responsive" style={imgHeightWidth}/>
-
-                                                </div>
-                                            </form>
-
-
-                                        </div>
-                                        <div className="col-md-6 col-xs-5">
-                                            <form role="form">
-                                                <div className="form-group">
-                                                    <label className="outPersonName">Sohel Vali Cakewalk</label>
-                                                    <div style={mobileFont}>9898548754</div>
-                                                </div>
-                                            </form>
-                                        </div>
-
-                                        <div className="col-md-4 col-xs-2">
-                                            <form role="form">
-                                                <div className="form-group">
-                                                    <button className="btn btn-primary btn-md">Out</button>
-                                                </div>
-                                            </form>
-                                        </div>
-
+                                    <div>
+                                        {this.state.visitorCheckIns.map(this.renderVisitorCheckIns)}
                                     </div>
-                                    <hr/>
-
 
                                 </div>
                             </div>

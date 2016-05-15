@@ -5,7 +5,7 @@
 import React from 'react';
 import $ from 'jquery';
 
-class VisitorDetails extends React.Component {
+class StaffDetails extends React.Component {
     constructor() {
         super();
 
@@ -115,7 +115,7 @@ class VisitorDetails extends React.Component {
                     verificationnumber: VerificationTypeNum,
                     towernumber: TowerNum,
                     flatnumber: FlatNum,
-                    visitortypeid: "57375b8ae8f44693cbb3e084",
+                    visitortypeid: "57375b82e8f44693cbb3e083",
                     photo: "",
                     photoproof: ""
                 },
@@ -570,4 +570,4 @@ class VisitorDetails extends React.Component {
     }
 }
 
-export default VisitorDetails;
+export default StaffDetails;

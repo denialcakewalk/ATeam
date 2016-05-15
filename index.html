@@ -28,13 +28,13 @@
 
     <style type="text/css">
         /*.route-me {*/
-            /*cursor: pointer;*/
+        /*cursor: pointer;*/
         /*}*/
 
         /*@media(max-width: 700px){*/
-            /*.imgBlueRidge{*/
-                /*display: none !important;*/
-            /*}*/
+        /*.imgBlueRidge{*/
+        /*display: none !important;*/
+        /*}*/
         /*}*/
     </style>
 
@@ -42,6 +42,9 @@
         $(document).ready(function () {
             $("a.route-me").click(function (event) {
                 debugger;
+                $("a.route-me").remove("active-menu");
+                $(this).addClass("active-menu");
+
                 var _route = $(this).attr("data-route") == "Dashboard" ? "/" : "/" + $(this).attr("data-route");
 
                 $(location).attr('href', _route);
@@ -77,8 +80,8 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
 
 
                 <!--<li>-->
-                    <!--<a class="active-menu route-me" data-route="Dashboard"><i-->
-                            <!--class="fa fa-dashboard fa-3x"></i> Dashboard</a>-->
+                <!--<a class="active-menu route-me" data-route="Dashboard"><i-->
+                <!--class="fa fa-dashboard fa-3x"></i> Dashboard</a>-->
                 <!--</li>-->
                 <li>
                     <a class="route-me" data-route="VisitorDetails"><i class="fa fa-user fa-2x"></i>New Visitor</a>
@@ -87,13 +90,14 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
                     <a class="route-me" data-route="CheckOut"><i class="fa fa-sign-out fa-2x"></i>Check Out</a>
                 </li>
                 <li>
-                    <a class="route-me" data-route="VisitorDetails"><i class="fa fa-users fa-2x"></i>Frequent Visitor</a>
+                    <a class="route-me" data-route="VisitorDetails"><i class="fa fa-users fa-2x"></i>Frequent
+                        Visitor</a>
                 </li>
                 <li>
                     <a class="route-me" data-route="VisitorDetails"><i class="fa fa-retweet fa-2x"></i>Expected Visitor</a>
                 </li>
                 <li>
-                    <a class="route-me" data-route="VisitorDetails"><i class="fa fa-sign-in fa-2x"></i>Staff In</a>
+                    <a class="route-me" data-route="StaffDetails"><i class="fa fa-sign-in fa-2x"></i>Staff In</a>
                 </li>
                 <li>
                     <a class="route-me" data-route="StaffOut"><i class="fa fa-sign-out  fa-2x"></i>Staff Out</a>
@@ -103,34 +107,34 @@ font-size: 16px;"> Last access : 30 May 2014 &nbsp; <a href="#" class="btn btn-d
                 </li>
 
                 <!--<li>-->
-                    <!--<a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span-->
-                            <!--class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li>-->
-                            <!--<a href="#">Second Level Link</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="#">Second Level Link</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="#">Second Level Link<span class="fa arrow"></span></a>-->
-                            <!--<ul class="nav nav-third-level">-->
-                                <!--<li>-->
-                                    <!--<a href="#">Third Level Link</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="#">Third Level Link</a>-->
-                                <!--</li>-->
-                                <!--<li>-->
-                                    <!--<a href="#">Third Level Link</a>-->
-                                <!--</li>-->
-
-                            <!--</ul>-->
-
-                        <!--</li>-->
-                    <!--</ul>-->
+                <!--<a href="#"><i class="fa fa-sitemap fa-3x"></i> Multi-Level Dropdown<span-->
+                <!--class="fa arrow"></span></a>-->
+                <!--<ul class="nav nav-second-level">-->
+                <!--<li>-->
+                <!--<a href="#">Second Level Link</a>-->
                 <!--</li>-->
-               <!---->
+                <!--<li>-->
+                <!--<a href="#">Second Level Link</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="#">Second Level Link<span class="fa arrow"></span></a>-->
+                <!--<ul class="nav nav-third-level">-->
+                <!--<li>-->
+                <!--<a href="#">Third Level Link</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="#">Third Level Link</a>-->
+                <!--</li>-->
+                <!--<li>-->
+                <!--<a href="#">Third Level Link</a>-->
+                <!--</li>-->
+
+                <!--</ul>-->
+
+                <!--</li>-->
+                <!--</ul>-->
+                <!--</li>-->
+                <!---->
             </ul>
 
         </div>

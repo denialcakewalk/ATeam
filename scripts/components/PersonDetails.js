@@ -2,6 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import autobind from 'autobind-decorator';
 import PersonDetailsModal from './PersonDetailsModal';
+import idb from 'idb';
 
 @autobind
 class PersonDetails extends React.Component {
@@ -16,6 +17,31 @@ class PersonDetails extends React.Component {
         var ContactNum = $("#txtContactNumber").val().trim();
 
         if ((OwnerName && TowerNum && FlatNum && Gender && ContactNum) != "") {
+            var dbPromise = idb.open('persondetails', 1, function (upgradeDb) {
+                var persondetailStore = upgradeDb.createObjectStore('persondetails', { keyPath: 'id' });
+                persondetailStore.createIndex('persondetailsIndex', ['name', 'faltnumber'], { unique: true });
+
+            });
+
+            return dbPromise.then(function (db) {
+                var tx = db.transaction('persondetails', 'readwrite');
+                var persondetailStore = tx.objectStore('persondetails');
+                //var index = trainStore.index('persondetailsIndex');
+               // var resp = index.get(IDBKeyRange.only([$("#txtSource").val(), $("#txtDest").val()]));
+                persondetailStore.put({
+                    name: OwnerName,
+                    towernumber: TowerNum,
+                    faltnumber: FlatNum,
+                    gender: Gender,
+                    contactnumber: ContactNum,
+                    photo: "",
+                    id: Math.random().toString(36).slice(2),
+                    isSync:false
+                });
+                return tx.complete;
+            }).then(function () {
+                console.log('Added');
+            });
             $.ajax({
                 type: "POST",
                 url: "http://192.101.102.165:4030/api/persondetails",

@@ -200,11 +200,10 @@ class PersonDetails extends React.Component {
                     <div className="row">
                         <div className="col-md-6">
                             <h2>Person Details</h2>
-                            <h5>Welcome Jhon Deo , Love to see you back. </h5>
+
                         </div>
                         <div className="col-md-6">
-                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right"
-                                    data-toggle="collapse" data-target="#addPersonDetailsDiv">Add
+                            <button onClick={this.openModal} className="btn btn-primary btn-small pull-right" data-toggle="collapse" data-target="#addPersonDetailsDiv">Add
                             </button>
                         </div>
                     </div>
@@ -378,14 +377,13 @@ class PersonDetails extends React.Component {
 
                                 </div>
                             </div>
+                            <button className="btn btn-primary" onClick={this.savePersonDetails}>Save</button>
 
+                            
                         </div>
 
-                        <button className="btn btn-primary" onClick={this.savePersonDetails}>Save</button>
-                        &nbsp;
-                        <button className="btn btn-primary">Edit</button>
-                        &nbsp;
-                        <button className="btn btn-primary">Delete</button>
+
+
 
                     </div>
 

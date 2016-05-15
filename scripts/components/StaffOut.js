@@ -142,7 +142,7 @@ class StaffIn extends React.Component {
                         <div className="col-md-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    Staff Check In
+                                    Staff Check Out
                                 </div>
                                 <div className="panel-body">
                                     <div className="row">

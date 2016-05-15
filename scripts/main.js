@@ -9,6 +9,7 @@ import {createHistory} from 'history';
 import Dashboard from './components/Dashboard';
 import PersonDetails from './components/PersonDetails';
 import VisitorDetails from './components/VisitorDetails';
+import StaffDetails from './components/StaffDetails';
 import CheckOut from './components/CheckOut';
 import StaffOut from './components/StaffOut';
 
@@ -21,6 +22,7 @@ var routes = (
         {/* <Route path="/" component={Dashboard}/>*/}
         <Route path="/PersonDetails" component={PersonDetails}/>
         <Route path="/VisitorDetails" component={VisitorDetails}/>
+        <Route path="/StaffDetails" component={StaffDetails}/>
         <Route path="/CheckOut" component={CheckOut}/>
         <Route path="/StaffOut" component={StaffOut}/>
 

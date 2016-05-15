@@ -38,7 +38,8 @@ class VisitorDetails extends React.Component {
 
         Webcam.set({
 
-            height: 280,
+            height: 180,
+           
             image_format: 'jpeg',
             jpeg_quality: 90
         });
@@ -219,7 +220,6 @@ class VisitorDetails extends React.Component {
             img.src=data_uri;
             img.id = 'imgToDisplay';
            // img.className = 'form-control img-responsive';
-           // img.height = '180';
 
             var dv=$('#imgDiv');
             dv.empty();
@@ -231,7 +231,8 @@ class VisitorDetails extends React.Component {
     render() {
 
         var visitorImageHeight = {
-            height: 180
+            height: 180,
+            width:180,
         }
 
         var txtVisitorAddressStyle = {

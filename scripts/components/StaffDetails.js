@@ -199,7 +199,7 @@ class StaffDetails extends React.Component {
 
         Webcam.set({
 
-            height: 280,
+            height: 180,
             image_format: 'jpeg',
             jpeg_quality: 90
         });
@@ -216,7 +216,8 @@ class StaffDetails extends React.Component {
     render() {
 
         var visitorImageHeight = {
-            height: 180
+            height: 180,
+            width:180,
         }
 
         var txtVisitorAddressStyle = {

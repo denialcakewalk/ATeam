@@ -22,11 +22,11 @@ if (navigator.serviceWorker) {
         });
         var displayOnlineStatus = document.getElementById("online-status"),
             isOnline = function () {
-                alert('Online');
+                //alert('Online');
                 this.SyncData();
             },
             isOffline = function () {
-                alert('Offline');
+               // alert('Offline');
             };
 
         if (window.addEventListener) {
@@ -121,21 +121,22 @@ function SyncPersonDetails() {
 }
 function SyncViditorDetails() {
 
-    var dbPromise = idb.open('newvisitordetails', 1, function (upgradeDb) {
+    var dbPromise = idb.open('newvisitors', 1, function (upgradeDb) {
         var persondetailStore = upgradeDb.createObjectStore('persondetails', { keyPath: 'id' });
         persondetailStore.createIndex('persondetailsIndex', ['name', 'faltnumber'], { unique: true });
     });
     return dbPromise.then(function (db) {
         var tx = db.transaction('newvisitors', 'readwrite');
-        var persondetailStore = tx.objectStore('newvisitors');
-        var index = persondetailStore.index('newvisitorsIndex');
+        var newvisitorsStore = tx.objectStore('newvisitors');
+       // var index = persondetailStore.index('newvisitorsIndex');
         // var resp = index.get(IDBKeyRange.only([$("#txtSource").val(), $("#txtDest").val()]));
-        index.getAll().then(function(data){
+        newvisitorsStore.getAll().then(function(data){
                 for(var i=0;i<data.length;i++){
                     $.ajax({
                         type: "POST",
                         url: "http://192.101.102.165:4030/api/newvisitors",
                         data: {
+
                             name:data[i].name,
                             address:data[i].address,
                             gender:data[i].gender,
@@ -145,7 +146,8 @@ function SyncViditorDetails() {
                             towernumber:data[i].towernumber,
                             flatnumber:data[i].flatnumber,
                             visitortypeid:data[i].visitortypeid,
-
+                            photo: data[i].photo,
+                            photoproof: data[i].photoproof
                         },
                         dataType: "json",
                         success: function (data) {
@@ -154,13 +156,11 @@ function SyncViditorDetails() {
 
                                 var dbPromise = idb.open('newvisitors', 1, function (upgradeDb) {
                                     var visitordetailStore = upgradeDb.createObjectStore('newvisitors', { keyPath: 'id' });
-                                    visitordetailStore.createIndex('newvisitorsIndex', ['name', 'faltnumber'], { unique: true });
+
                                 });
                                 return dbPromise.then(function (db) {
                                     var tx = db.transaction('newvisitors', 'readwrite');
                                     var visitordetailStore = tx.objectStore('newvisitors');
-                                    var index = visitordetailStore.index('newvisitorsIndex');
-
                                     visitordetailStore.getAll().then(function (item) {
                                         for(var i=0;i<item.length;i++){
                                         if(data.name==item[i].name && data.towernumber==item[i].towernumber){

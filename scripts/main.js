@@ -14,6 +14,7 @@ import CheckOut from './components/CheckOut';
 import StaffOut from './components/StaffOut';
 import StaffIn from './components/StaffIn';
 
+
 /*
  Routes
  */
@@ -27,6 +28,7 @@ var routes = (
         <Route path="/CheckOut" component={CheckOut}/>
         <Route path="/StaffOut" component={StaffOut}/>
         <Route path="/StaffIn" component={StaffIn}/>
+
 
     </Router>
 );

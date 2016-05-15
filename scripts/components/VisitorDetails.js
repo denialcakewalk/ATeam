@@ -79,11 +79,20 @@ class VisitorDetails extends React.Component {
         });
     }
 
-    onCapturClick (e){
+    onCaptureClick (e){
         e.preventDefault();
-
+        // imgDiv
         Webcam.snap(function (data_uri){
+            var img=new Image();
+            img.src=data_uri;
+            img.id = 'imgToDisplay';
+           // img.className = 'form-control img-responsive';
+            img.height = '180';
 
+            var dv=$('#imgDiv');
+            dv.empty();
+            dv.append(img);
+            //$('#visitorImg')[0].src=data_uri;
         });
     }
 
@@ -92,7 +101,7 @@ class VisitorDetails extends React.Component {
 
 
         Webcam.set({
-            
+
             height: 280,
             image_format: 'jpeg',
             jpeg_quality: 90
@@ -343,7 +352,7 @@ class VisitorDetails extends React.Component {
 
 
                                                         <div id="imgDiv" className="form-group">
-                                                           <img src="./css/images/default.jpg" className="form-control" style={visitorImageHeight}/>
+                                                               <img id="visitorImg" src="/assets/img/default.jpg" className="form-control img-responsive" style={visitorImageHeight}/>
 
                                                         </div>
 

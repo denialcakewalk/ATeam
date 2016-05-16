@@ -292,7 +292,7 @@ class VisitorDetails extends React.Component {
                         <div className="col-md-12">
                             <div className="panel panel-default">
                                 <div className="panel-heading">
-                                    Visitor's Details
+                                    Visitor's Detail
                                 </div>
                                 <div className="panel-body">
                                     <div className="row">
@@ -338,9 +338,9 @@ class VisitorDetails extends React.Component {
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <textarea id="txtVisitorAddress" className="form-control"
+                                                    <input type="text" id="txtVisitorAddress" className="form-control"
                                                               placeholder="Address" rows="3"
-                                                              style={txtVisitorAddressStyle}></textarea>
+                                                              style={txtVisitorAddressStyle}></input>
                                                 </div>
 
                                                 <div className="form-group">
@@ -425,7 +425,7 @@ class VisitorDetails extends React.Component {
                                                 </div>
 
                                                 <div className="form-group">
-                                                    <textarea id="txtPurpose" className="form-control"
+                                                    <input type="text" id="txtPurpose" className="form-control"
                                                               placeholder="Purpose" style={txtVisitorAddressStyle}/>
                                                 </div>
 
@@ -612,12 +612,14 @@ class VisitorDetails extends React.Component {
                      */}
                     <button className="btn btn-primary" onClick={this.visitorCheckIn}>Check In</button>
                     &nbsp;
+                    {/*
                     <button className="btn btn-primary">Edit</button>
                     &nbsp;
                     <button className="btn btn-primary">Delete</button>
                     &nbsp;
                     <button className="btn btn-success">New</button>
                     &nbsp;
+                     */}
 
                 </div>
 

@@ -564,12 +564,7 @@ class StaffDetails extends React.Component {
                      */}
                     <button className="btn btn-primary" onClick={this.staffCheckIn}>Check In</button>
                     &nbsp;
-                    <button className="btn btn-primary">Edit</button>
-                    &nbsp;
-                    <button className="btn btn-primary">Delete</button>
-                    &nbsp;
-                    <button className="btn btn-success">New</button>
-                    &nbsp;
+                    
                 </div>
 
             </div>
